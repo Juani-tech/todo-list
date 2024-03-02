@@ -9,7 +9,7 @@ export function addNewProject(project) {
     projectList.appendChild(newProject);
 }
 
-
+// This function will display the name of the project and its tasks in the DOM
 export function displayProject(project) {
 
     const projectsContainer = document.getElementById('content');
@@ -36,6 +36,7 @@ export function displayProject(project) {
             padding: 10px;
             margin: 10px;
         `;
+        const removeTaskButton = document.createElement('button');
         const taskTitle = document.createElement('p');
         const taskDueDate = document.createElement('p');
         const taskPriority = document.createElement('p'); 
@@ -43,10 +44,26 @@ export function displayProject(project) {
         taskTitle.innerHTML = project.tasks[i].title;
         taskDueDate.innerHTML = "Due date: " + project.tasks[i].dueDate;
         taskPriority.innerHTML = "Priority: " + project.tasks[i].priority;
+        removeTaskButton.innerHTML = "Remove";
+        removeTaskButton.style = `
+            background-color: #04AA6D;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        `;
+        removeTaskButton.addEventListener('click', () => {
+            project.tasks.splice(i, 1);
+            projectContainer.removeChild(task);
+        });
 
         task.appendChild(taskTitle);
         task.appendChild(taskDueDate);
         task.appendChild(taskPriority);
+        task.appendChild(removeTaskButton);
 
         projectContainer.appendChild(task);
     }
