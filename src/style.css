@@ -28,14 +28,20 @@ header > nav > ul {
 	list-style: none;
 	padding: 0;
 	margin: 0;
+	display: flex;
+	gap: 1rem;
 }
 
 #content {
 	flex: 1;
 	padding: 1rem;
 }
+#add-project-button {
+	cursor: pointer;
+}
+
 /* Dropdown Button */
-.dropbtn {
+.dropbtn, #add-project-button {
 	background-color: #04AA6D;
 	color: white;
 	padding: 16px;

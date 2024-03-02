@@ -1,12 +1,45 @@
 import { Project, Todo } from './projects.js';
 
-export function addNewProject(project) {
+export function addProjectToDropdown(project) {
     const projectList = document.querySelector('.dropdown-content');
     const newProject = document.createElement('a');
     newProject.setAttribute('class', `${project.title}-dropdown`); // Using backticks for template literals
     newProject.setAttribute('href', '#');
     newProject.innerHTML = project.title;
     projectList.appendChild(newProject);
+}
+
+export function addNewProject() {
+    const content = document.getElementById('content');
+    const dialog = document.createElement('dialog');
+    const form = document.createElement('form');
+    const titleLabel = document.createElement('label');
+    const title = document.createElement('input');
+    const submit = document.createElement('button');
+    const close = document.createElement('button');
+    
+    content.appendChild(dialog);
+    dialog.appendChild(form);
+    form.appendChild(titleLabel);
+    form.appendChild(title);
+    form.appendChild(submit);
+    form.appendChild(close);
+    content.appendChild(dialog);
+    dialog.showModal();
+    // dialog.style = `
+    //     width: 50%;
+    //     height: 50%;
+    // `;
+    titleLabel.innerHTML = "Project Title: ";
+    submit.innerHTML = "Submit";
+    close.innerHTML = "Close";
+    
+    submit.addEventListener('click', () => {
+        const newProject = new Project(title.value);
+        addProjectToDropdown(newProject);
+        dialog.close();
+    });
+
 }
 
 
@@ -154,4 +187,6 @@ export function displayProject(project) {
     projectContainer.setAttribute('class', 'project-container');
     projectsContainer.appendChild(projectContainer);
 }
+
+
 
