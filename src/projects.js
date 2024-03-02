@@ -3,10 +3,14 @@ export class Project {
         this.title = title;
         this.tasks = [];
     }
+
+    addTask(task) {
+        this.tasks.push(task);
+    }
 }
 
 
-class Todo {
+export class Todo {
     constructor(title, description, dueDate, priority, notes, checklist) {
         this.title = title;
         this.description = description;
@@ -17,7 +21,8 @@ class Todo {
     }
 }
 
-export default function createNewProject(projectTitle) {
+export function createNewProject(projectTitle) {
     return new Project(projectTitle);
 }
+
 
