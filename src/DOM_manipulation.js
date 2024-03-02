@@ -1,4 +1,4 @@
-import { Project } from './projects.js';
+import { Project, Todo } from './projects.js';
 
 export function addNewProject(project) {
     const projectList = document.querySelector('.dropdown-content');
@@ -9,10 +9,12 @@ export function addNewProject(project) {
     projectList.appendChild(newProject);
 }
 
+
+
 // This function will display the name of the project and its tasks in the DOM
 export function displayProject(project) {
-
     const projectsContainer = document.getElementById('content');
+    projectsContainer.innerHTML = "";
     const projectTitle = document.createElement('h2');
     projectTitle.style = `
         text-align: center;
@@ -26,6 +28,7 @@ export function displayProject(project) {
     projectContainer.style = `
         display: grid;
         grid-template: auto / repeat(4, 1fr);
+        gap: 1rem;
     `;
     
     for (let i = 0; i < project.tasks.length; i++) {
@@ -34,7 +37,7 @@ export function displayProject(project) {
             border: 1px solid black;
             border-radius: 5px;
             padding: 10px;
-            margin: 10px;
+            // margin: 10px;
         `;
         const removeTaskButton = document.createElement('button');
         const taskTitle = document.createElement('p');
@@ -68,6 +71,87 @@ export function displayProject(project) {
         projectContainer.appendChild(task);
     }
 
+    const newTaskButton = document.createElement('button');
+    newTaskButton.innerHTML = "New Task";
+    newTaskButton.style = `
+        background-color: #04AA6D;
+        color: white;
+        padding: 10px 20px;
+        font-size: 16px;
+        // margin: 4px 2px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+    `;
+    newTaskButton.addEventListener('click', () => {
+        const newTask = document.createElement('div');
+        newTask.style = `
+            border: 1px solid black;
+            border-radius: 5px;
+            display: grid;
+            padding: 0.5rem;
+            `;
+        const newTaskTitleLabel = document.createElement('label');
+        const newTaskTitle = document.createElement('input');
+        const newTaskDueDateLabel = document.createElement('label');
+        const newTaskDueDate = document.createElement('input');
+        const newTaskPriorityLabel = document.createElement('label');
+        const newTaskPriority = document.createElement('input');
+        const newTaskDescriptionLabel = document.createElement('label');
+        const newTaskDescription = document.createElement('input'); 
+        const newTaskNotesLabel = document.createElement('label');
+        const newTaskNotes = document.createElement('input');
+        const newTaskChecklistLabel = document.createElement('label');
+        const newTaskChecklist = document.createElement('input');
+        const addTaskButton = document.createElement('button');
+        
+        newTaskTitleLabel.innerHTML = "Title: ";
+        newTaskDueDateLabel.innerHTML = "Due Date: ";
+        newTaskPriorityLabel.innerHTML = "Priority: ";
+        newTaskDescriptionLabel.innerHTML = "Description: ";
+        newTaskNotesLabel.innerHTML = "Notes: ";
+        newTaskChecklistLabel.innerHTML = "Checklist: ";
+        addTaskButton.innerHTML = "Add Task";
+        addTaskButton.style = `
+            background-color: #04AA6D;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        `;
+        addTaskButton.addEventListener('click', () => {
+            const newTask = new Todo(
+                newTaskTitle.value,
+                newTaskDescription.value,
+                newTaskDueDate.value,
+                newTaskPriority.value,
+                newTaskNotes.value,
+                newTaskChecklist.value.split(',')
+            );
+            project.addTask(newTask);
+            displayProject(project);
+            projectContainer.removeChild(newTask);
+        });
+        newTask.appendChild(newTaskTitleLabel);
+        newTask.appendChild(newTaskTitle);
+        newTask.appendChild(newTaskDueDateLabel);
+        newTask.appendChild(newTaskDueDate);
+        newTask.appendChild(newTaskPriorityLabel);
+        newTask.appendChild(newTaskPriority);
+        newTask.appendChild(newTaskDescriptionLabel);
+        newTask.appendChild(newTaskDescription);
+        newTask.appendChild(newTaskNotesLabel);
+        newTask.appendChild(newTaskNotes);
+        newTask.appendChild(newTaskChecklistLabel);
+        newTask.appendChild(newTaskChecklist);
+        newTask.appendChild(addTaskButton);
+        projectContainer.appendChild(newTask);
+    });
+    projectContainer.appendChild(newTaskButton);
     projectContainer.setAttribute('class', 'project-container');
     projectsContainer.appendChild(projectContainer);
 }
+
