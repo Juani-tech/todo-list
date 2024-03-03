@@ -22,6 +22,10 @@ export class Project {
     removeTask(taskTitle) {
         this.tasks = this.tasks.filter((t) => t.title !== taskTitle);
     }
+
+    getTask(taskTitle) {
+        return this.tasks.find((t) => t.title === taskTitle);
+    }
 }
 
 
@@ -33,6 +37,17 @@ export class Todo {
         this.priority = priority;
         this.notes = notes;
         this.checklist = checklist;
+    }
+    get attributes(){
+        return {
+            title: this.title,
+            description: this.description,
+            dueDate: this.dueDate,
+            priority: this.priority,
+            notes: this.notes,
+            checklist: this.checklist
+        };
+    
     }
 }
 

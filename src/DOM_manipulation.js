@@ -158,9 +158,9 @@ export function displayProject(project) {
             border: 1px solid black;
             border-radius: 5px;
             padding: 10px;
-            // margin: 10px;
         `;
         const removeTaskButton = document.createElement('button');
+        const seeTaskButton = document.createElement('button');
         const taskTitle = document.createElement('p');
         const taskDueDate = document.createElement('p');
         const taskPriority = document.createElement('p'); 
@@ -169,26 +169,56 @@ export function displayProject(project) {
         taskDueDate.innerHTML = "Due date: " + project.tasks[i].dueDate;
         taskPriority.innerHTML = "Priority: " + project.tasks[i].priority;
         removeTaskButton.innerHTML = "Remove";
-        removeTaskButton.style = `
-            background-color: #04AA6D;
-            color: white;
-            padding: 10px 20px;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-        `;
+        seeTaskButton.innerHTML = "See";
+
+        seeTaskButton.setAttribute('class', 'see-task-button');
+        removeTaskButton.setAttribute('class', 'remove-task-button');
         removeTaskButton.addEventListener('click', () => {
             project.removeTask(taskTitle.innerHTML);
             projectContainer.removeChild(task);
+        });
+        seeTaskButton.addEventListener('click', () => {
+            task.innerHTML = "";
+            const taskTitle = document.createElement('p');
+            const taskDescription = document.createElement('p');
+            const taskDueDate = document.createElement('p');
+            const taskPriority = document.createElement('p');
+            const taskNotes = document.createElement('p');
+            const taskChecklist = document.createElement('p');
+            const hideButton = document.createElement('button');
+
+            taskTitle.innerHTML = "Title: " + project.tasks[i].title;
+            taskDescription.innerHTML = "Description: " + project.tasks[i].description;
+            taskDueDate.innerHTML = "Due date: " + project.tasks[i].dueDate;
+            taskPriority.innerHTML = "Priority: " + project.tasks[i].priority;
+            taskNotes.innerHTML = "Notes: " + project.tasks[i].notes;
+            taskChecklist.innerHTML = "Checklist: " + project.tasks[i].checklist;
+            hideButton.innerHTML = "Hide";
+
+            task.appendChild(taskTitle);
+            task.appendChild(taskDescription);
+            task.appendChild(taskDueDate);
+            task.appendChild(taskPriority);
+            task.appendChild(taskNotes);
+            task.appendChild(taskChecklist);
+            task.appendChild(hideButton);
+
+            hideButton.addEventListener('click', () => {
+                task.innerHTML = "";
+                task.appendChild(taskTitle);
+                task.appendChild(taskDueDate);
+                task.appendChild(taskPriority);
+                task.appendChild(removeTaskButton);
+                task.appendChild(seeTaskButton);
+            });
+            // projectContainer.appendChild(task);
         });
 
         task.appendChild(taskTitle);
         task.appendChild(taskDueDate);
         task.appendChild(taskPriority);
         task.appendChild(removeTaskButton);
-
+        task.appendChild(seeTaskButton);
         projectContainer.appendChild(task);
     }
 
