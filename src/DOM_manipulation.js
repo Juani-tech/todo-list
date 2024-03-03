@@ -21,6 +21,13 @@ export function addNewProject() {
     const submit = document.createElement('button');
     const close = document.createElement('button');
     
+    form.setAttribute('class', 'add-project-form');
+
+    titleLabel.style = `
+        font-weight: bold;
+        font-size: 1rem;
+    `
+
     content.appendChild(dialog);
     dialog.appendChild(form);
     form.appendChild(titleLabel);
@@ -200,8 +207,9 @@ export function displayProject(project) {
                 task.appendChild(taskTitle);
                 task.appendChild(taskDueDate);
                 task.appendChild(taskPriority);
-                task.appendChild(removeTaskButton);
                 task.appendChild(seeTaskButton);
+                task.appendChild(editTaskButton);
+                task.appendChild(removeTaskButton);
             });
         });
 
@@ -235,9 +243,11 @@ export function displayProject(project) {
             newTaskDescriptionLabel.innerHTML = "Description: ";
             newTaskNotesLabel.innerHTML = "Notes: ";
             newTaskChecklistLabel.innerHTML = "Checklist: ";
-
             saveButton.innerHTML = "Save";
             cancelButton.innerHTML = "Cancel";
+
+            saveButton.setAttribute('class', 'save-button');
+            cancelButton.setAttribute('class', 'cancel-button');
 
             saveButton.addEventListener('click', () => {
                 project.removeTask(taskTitle.innerHTML);
@@ -276,9 +286,9 @@ export function displayProject(project) {
         task.appendChild(taskTitle);
         task.appendChild(taskDueDate);
         task.appendChild(taskPriority);
-        task.appendChild(removeTaskButton);
         task.appendChild(seeTaskButton);
         task.appendChild(editTaskButton);
+        task.appendChild(removeTaskButton);
         projectContainer.appendChild(task);
     }
 

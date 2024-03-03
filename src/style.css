@@ -86,6 +86,13 @@ header > nav > ul {
 
   /* */
 
+.add-project-form {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+
+}
+
 .task-container {
 	border: 1px solid black;
 	border-radius: 5px;
@@ -109,7 +116,7 @@ header > nav > ul {
 	align-items: center;
 	margin-top: 1rem;
 }
-.cancel-button, .add-task-button, .remove-task-button, .see-task-button, .edit-task-button {
+button {
 	background-color: #04AA6D;
 	color: white;
 	padding: 10px 20px;
@@ -118,4 +125,8 @@ header > nav > ul {
 	cursor: pointer;
 	border: none;
 	border-radius: 5px;
+}
+
+.new-task-button {
+	margin: 0;
 }
