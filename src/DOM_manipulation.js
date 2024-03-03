@@ -29,10 +29,7 @@ export function addNewProject() {
     form.appendChild(close);
     content.appendChild(dialog);
     dialog.showModal();
-    // dialog.style = `
-    //     width: 50%;
-    //     height: 50%;
-    // `;
+
     titleLabel.innerHTML = "Project Title: ";
     submit.innerHTML = "Submit";
     close.innerHTML = "Close";
@@ -47,8 +44,6 @@ export function addNewProject() {
     });
 }
 
-
-
 function addNewTaskButton(project, projectContainer) {
     const newTaskButton = document.createElement('button');
     newTaskButton.setAttribute('class', 'new-task-button');
@@ -58,12 +53,8 @@ function addNewTaskButton(project, projectContainer) {
         newTaskButton.parentNode.removeChild(newTaskButton);
 
         const newTask = document.createElement('div');
-        newTask.style = `
-            border: 1px solid black;
-            border-radius: 5px;
-            display: grid;
-            padding: 0.5rem;
-            `;
+        newTask.setAttribute('class', 'task-container')
+
         const newTaskTitleLabel = document.createElement('label');
         const newTaskTitle = document.createElement('input');
         const newTaskDueDateLabel = document.createElement('label');
@@ -132,6 +123,8 @@ function addNewTaskButton(project, projectContainer) {
     });
     projectContainer.appendChild(newTaskButton);
 }
+
+
 // This function will display the name of the project and its tasks in the DOM
 export function displayProject(project) {
     const projectsContainer = document.getElementById('content');
@@ -139,7 +132,6 @@ export function displayProject(project) {
     const projectTitle = document.createElement('h2');
     projectTitle.style = `
         text-align: center;
-
     `;
     projectTitle.innerHTML = project.title;
 
@@ -154,11 +146,7 @@ export function displayProject(project) {
     
     for (let i = 0; i < project.tasks.length; i++) {
         const task = document.createElement('div');
-        task.style = `
-            border: 1px solid black;
-            border-radius: 5px;
-            padding: 10px;
-        `;
+        task.setAttribute('class', 'task-container');
         const removeTaskButton = document.createElement('button');
         const seeTaskButton = document.createElement('button');
         const editTaskButton = document.createElement('button');
@@ -219,11 +207,17 @@ export function displayProject(project) {
 
         editTaskButton.addEventListener('click', () => {
             task.innerHTML = "";
+            const newTaskTitleLabel = document.createElement('label');
             const newTaskTitle = document.createElement('input');
+            const newTaskDueDateLabel = document.createElement('label');
             const newTaskDueDate = document.createElement('input');
+            const newTaskPriorityLabel = document.createElement('label');
             const newTaskPriority = document.createElement('input');
+            const newTaskDescriptionLabel = document.createElement('label');
             const newTaskDescription = document.createElement('input');
+            const newTaskNotesLabel = document.createElement('label');
             const newTaskNotes = document.createElement('input');
+            const newTaskChecklistLabel = document.createElement('label');
             const newTaskChecklist = document.createElement('input');
             const saveButton = document.createElement('button');
             const cancelButton = document.createElement('button');
@@ -234,6 +228,13 @@ export function displayProject(project) {
             newTaskDescription.value = project.tasks[i].description;
             newTaskNotes.value = project.tasks[i].notes;
             newTaskChecklist.value = project.tasks[i].checklist;
+
+            newTaskTitleLabel.innerHTML = "Title: ";
+            newTaskDueDateLabel.innerHTML = "Due Date: ";
+            newTaskPriorityLabel.innerHTML = "Priority: ";
+            newTaskDescriptionLabel.innerHTML = "Description: ";
+            newTaskNotesLabel.innerHTML = "Notes: ";
+            newTaskChecklistLabel.innerHTML = "Checklist: ";
 
             saveButton.innerHTML = "Save";
             cancelButton.innerHTML = "Cancel";
@@ -255,11 +256,17 @@ export function displayProject(project) {
                 displayProject(project);
             });
 
+            task.appendChild(newTaskTitleLabel);
             task.appendChild(newTaskTitle);
+            task.appendChild(newTaskDueDateLabel);
             task.appendChild(newTaskDueDate);
+            task.appendChild(newTaskPriorityLabel);
             task.appendChild(newTaskPriority);
+            task.appendChild(newTaskDescriptionLabel);
             task.appendChild(newTaskDescription);
+            task.appendChild(newTaskNotesLabel);
             task.appendChild(newTaskNotes);
+            task.appendChild(newTaskChecklistLabel);
             task.appendChild(newTaskChecklist);
             task.appendChild(saveButton);
             task.appendChild(cancelButton);

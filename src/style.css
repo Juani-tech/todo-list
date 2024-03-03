@@ -86,6 +86,13 @@ header > nav > ul {
 
   /* */
 
+.task-container {
+	border: 1px solid black;
+	border-radius: 5px;
+	display: grid;
+	padding: 0.5rem;
+}
+
 .new-task-button { 
 	background-color: #04AA6D;
 	color: white;
