@@ -3,9 +3,24 @@ export class Project {
         this.title = title;
         this.tasks = [];
     }
+    #checkIfExists(taskTitle) {
+        this.tasks.forEach((t) => {
+            if (t.title === taskTitle) {
+                return true;
+            }
+        });
+        return false;
+    }
 
     addTask(task) {
+        if (this.#checkIfExists(task.title)) {
+            return;
+        }
         this.tasks.push(task);
+    }
+
+    removeTask(taskTitle) {
+        this.tasks = this.tasks.filter((t) => t.title !== taskTitle);
     }
 }
 

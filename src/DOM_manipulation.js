@@ -42,26 +42,21 @@ export function addNewProject() {
         addProjectToDropdown(newProject);
         dialog.close();
     }); 
-
+    close.addEventListener('click', () => {
+        dialog.close();
+    });
 }
 
 
 
 function addNewTaskButton(project, projectContainer) {
     const newTaskButton = document.createElement('button');
+    newTaskButton.setAttribute('class', 'new-task-button');
     newTaskButton.innerHTML = "New Task";
-    newTaskButton.style = `
-        background-color: #04AA6D;
-        color: white;
-        padding: 10px 20px;
-        font-size: 16px;
-        // margin: 4px 2px;
-        cursor: pointer;
-        border: none;
-        border-radius: 5px;
-    `;
+
     newTaskButton.addEventListener('click', () => {
         newTaskButton.parentNode.removeChild(newTaskButton);
+
         const newTask = document.createElement('div');
         newTask.style = `
             border: 1px solid black;
@@ -81,27 +76,26 @@ function addNewTaskButton(project, projectContainer) {
         const newTaskNotes = document.createElement('input');
         const newTaskChecklistLabel = document.createElement('label');
         const newTaskChecklist = document.createElement('input');
+        const buttonsContainer = document.createElement('div');
         const addTaskButton = document.createElement('button');
-        
-        newTaskTitleLabel.innerHTML = "Title: ";
+        const cancelButton = document.createElement('button');
+
+        newTaskTitleLabel.innerHTML = "Title: ";  
         newTaskDueDateLabel.innerHTML = "Due Date: ";
         newTaskPriorityLabel.innerHTML = "Priority: ";
         newTaskDescriptionLabel.innerHTML = "Description: ";
         newTaskNotesLabel.innerHTML = "Notes: ";
         newTaskChecklistLabel.innerHTML = "Checklist: ";
         addTaskButton.innerHTML = "Add Task";
-        addTaskButton.style = `
-            background-color: #04AA6D;
-            color: white;
-            padding: 10px 20px;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-        `;
+        cancelButton.innerHTML = "Cancel";
+
+        buttonsContainer.setAttribute('class', 'add-task-buttons-container');
+        cancelButton.setAttribute('class', 'cancel-button');
+        addTaskButton.setAttribute('class', 'add-task-button');
+
+  
         addTaskButton.addEventListener('click', () => {
-            const newTask = new Todo(
+            const newProjectTask = new Todo(
                 newTaskTitle.value,
                 newTaskDescription.value,
                 newTaskDueDate.value,
@@ -109,10 +103,18 @@ function addNewTaskButton(project, projectContainer) {
                 newTaskNotes.value,
                 newTaskChecklist.value.split(',')
             );
-            project.addTask(newTask);
+            project.addTask(newProjectTask);
             displayProject(project);
             projectContainer.removeChild(newTask);
         });
+        cancelButton.addEventListener('click', () => {
+            projectContainer.removeChild(newTask);
+            projectContainer.appendChild(newTaskButton);
+        });
+
+
+        buttonsContainer.appendChild(addTaskButton);
+        buttonsContainer.appendChild(cancelButton);
         newTask.appendChild(newTaskTitleLabel);
         newTask.appendChild(newTaskTitle);
         newTask.appendChild(newTaskDueDateLabel);
@@ -125,7 +127,7 @@ function addNewTaskButton(project, projectContainer) {
         newTask.appendChild(newTaskNotes);
         newTask.appendChild(newTaskChecklistLabel);
         newTask.appendChild(newTaskChecklist);
-        newTask.appendChild(addTaskButton);
+        newTask.appendChild(buttonsContainer);
         projectContainer.appendChild(newTask);
     });
     projectContainer.appendChild(newTaskButton);
@@ -178,7 +180,7 @@ export function displayProject(project) {
             border-radius: 5px;
         `;
         removeTaskButton.addEventListener('click', () => {
-            project.tasks.splice(i, 1);
+            project.removeTask(taskTitle.innerHTML);
             projectContainer.removeChild(task);
         });
 
