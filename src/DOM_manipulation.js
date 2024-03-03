@@ -161,6 +161,7 @@ export function displayProject(project) {
         `;
         const removeTaskButton = document.createElement('button');
         const seeTaskButton = document.createElement('button');
+        const editTaskButton = document.createElement('button');
         const taskTitle = document.createElement('p');
         const taskDueDate = document.createElement('p');
         const taskPriority = document.createElement('p'); 
@@ -170,9 +171,12 @@ export function displayProject(project) {
         taskPriority.innerHTML = "Priority: " + project.tasks[i].priority;
         removeTaskButton.innerHTML = "Remove";
         seeTaskButton.innerHTML = "See";
+        editTaskButton.innerHTML = "Edit";
 
         seeTaskButton.setAttribute('class', 'see-task-button');
         removeTaskButton.setAttribute('class', 'remove-task-button');
+        editTaskButton.setAttribute('class', 'edit-task-button');
+
         removeTaskButton.addEventListener('click', () => {
             project.removeTask(taskTitle.innerHTML);
             projectContainer.removeChild(task);
@@ -211,14 +215,63 @@ export function displayProject(project) {
                 task.appendChild(removeTaskButton);
                 task.appendChild(seeTaskButton);
             });
-            // projectContainer.appendChild(task);
         });
+
+        editTaskButton.addEventListener('click', () => {
+            task.innerHTML = "";
+            const newTaskTitle = document.createElement('input');
+            const newTaskDueDate = document.createElement('input');
+            const newTaskPriority = document.createElement('input');
+            const newTaskDescription = document.createElement('input');
+            const newTaskNotes = document.createElement('input');
+            const newTaskChecklist = document.createElement('input');
+            const saveButton = document.createElement('button');
+            const cancelButton = document.createElement('button');
+
+            newTaskTitle.value = project.tasks[i].title;
+            newTaskDueDate.value = project.tasks[i].dueDate;
+            newTaskPriority.value = project.tasks[i].priority;
+            newTaskDescription.value = project.tasks[i].description;
+            newTaskNotes.value = project.tasks[i].notes;
+            newTaskChecklist.value = project.tasks[i].checklist;
+
+            saveButton.innerHTML = "Save";
+            cancelButton.innerHTML = "Cancel";
+
+            saveButton.addEventListener('click', () => {
+                project.removeTask(taskTitle.innerHTML);
+                const newProjectTask = new Todo(
+                    newTaskTitle.value,
+                    newTaskDescription.value,
+                    newTaskDueDate.value,
+                    newTaskPriority.value,
+                    newTaskNotes.value,
+                    newTaskChecklist.value.split(',')
+                );
+                project.addTask(newProjectTask);
+                displayProject(project);
+            });
+            cancelButton.addEventListener('click', () => {
+                displayProject(project);
+            });
+
+            task.appendChild(newTaskTitle);
+            task.appendChild(newTaskDueDate);
+            task.appendChild(newTaskPriority);
+            task.appendChild(newTaskDescription);
+            task.appendChild(newTaskNotes);
+            task.appendChild(newTaskChecklist);
+            task.appendChild(saveButton);
+            task.appendChild(cancelButton);
+        }
+        );
 
         task.appendChild(taskTitle);
         task.appendChild(taskDueDate);
         task.appendChild(taskPriority);
         task.appendChild(removeTaskButton);
         task.appendChild(seeTaskButton);
+        task.appendChild(editTaskButton);
         projectContainer.appendChild(task);
     }
 

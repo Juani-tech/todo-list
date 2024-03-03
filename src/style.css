@@ -102,7 +102,7 @@ header > nav > ul {
 	align-items: center;
 	margin-top: 1rem;
 }
-.cancel-button, .add-task-button, .remove-task-button, .see-task-button {
+.cancel-button, .add-task-button, .remove-task-button, .see-task-button, .edit-task-button {
 	background-color: #04AA6D;
 	color: white;
 	padding: 10px 20px;
