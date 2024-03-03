@@ -3,6 +3,9 @@ import { Project, Todo } from './projects.js';
 export function addProjectToDropdown(project) {
     const projectList = document.querySelector('.dropdown-content');
     const newProject = document.createElement('a');
+    newProject.addEventListener('click', () => {
+        displayProject(project);
+    });
     newProject.setAttribute('class', `${project.title}-dropdown`); // Using backticks for template literals
     newProject.setAttribute('href', '#');
     newProject.innerHTML = project.title;
@@ -38,72 +41,13 @@ export function addNewProject() {
         const newProject = new Project(title.value);
         addProjectToDropdown(newProject);
         dialog.close();
-    });
+    }); 
 
 }
 
 
 
-// This function will display the name of the project and its tasks in the DOM
-export function displayProject(project) {
-    const projectsContainer = document.getElementById('content');
-    projectsContainer.innerHTML = "";
-    const projectTitle = document.createElement('h2');
-    projectTitle.style = `
-        text-align: center;
-
-    `;
-    projectTitle.innerHTML = project.title;
-
-    projectsContainer.appendChild(projectTitle);
-    
-    const projectContainer = document.createElement('div');
-    projectContainer.style = `
-        display: grid;
-        grid-template: auto / repeat(4, 1fr);
-        gap: 1rem;
-    `;
-    
-    for (let i = 0; i < project.tasks.length; i++) {
-        const task = document.createElement('div');
-        task.style = `
-            border: 1px solid black;
-            border-radius: 5px;
-            padding: 10px;
-            // margin: 10px;
-        `;
-        const removeTaskButton = document.createElement('button');
-        const taskTitle = document.createElement('p');
-        const taskDueDate = document.createElement('p');
-        const taskPriority = document.createElement('p'); 
-
-        taskTitle.innerHTML = project.tasks[i].title;
-        taskDueDate.innerHTML = "Due date: " + project.tasks[i].dueDate;
-        taskPriority.innerHTML = "Priority: " + project.tasks[i].priority;
-        removeTaskButton.innerHTML = "Remove";
-        removeTaskButton.style = `
-            background-color: #04AA6D;
-            color: white;
-            padding: 10px 20px;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-        `;
-        removeTaskButton.addEventListener('click', () => {
-            project.tasks.splice(i, 1);
-            projectContainer.removeChild(task);
-        });
-
-        task.appendChild(taskTitle);
-        task.appendChild(taskDueDate);
-        task.appendChild(taskPriority);
-        task.appendChild(removeTaskButton);
-
-        projectContainer.appendChild(task);
-    }
-
+function addNewTaskButton(project, projectContainer) {
     const newTaskButton = document.createElement('button');
     newTaskButton.innerHTML = "New Task";
     newTaskButton.style = `
@@ -117,6 +61,7 @@ export function displayProject(project) {
         border-radius: 5px;
     `;
     newTaskButton.addEventListener('click', () => {
+        newTaskButton.parentNode.removeChild(newTaskButton);
         const newTask = document.createElement('div');
         newTask.style = `
             border: 1px solid black;
@@ -184,6 +129,68 @@ export function displayProject(project) {
         projectContainer.appendChild(newTask);
     });
     projectContainer.appendChild(newTaskButton);
+}
+// This function will display the name of the project and its tasks in the DOM
+export function displayProject(project) {
+    const projectsContainer = document.getElementById('content');
+    projectsContainer.innerHTML = "";
+    const projectTitle = document.createElement('h2');
+    projectTitle.style = `
+        text-align: center;
+
+    `;
+    projectTitle.innerHTML = project.title;
+
+    projectsContainer.appendChild(projectTitle);
+    
+    const projectContainer = document.createElement('div');
+    projectContainer.style = `
+        display: grid;
+        grid-template: auto / repeat(4, 1fr);
+        gap: 1rem;
+    `;
+    
+    for (let i = 0; i < project.tasks.length; i++) {
+        const task = document.createElement('div');
+        task.style = `
+            border: 1px solid black;
+            border-radius: 5px;
+            padding: 10px;
+            // margin: 10px;
+        `;
+        const removeTaskButton = document.createElement('button');
+        const taskTitle = document.createElement('p');
+        const taskDueDate = document.createElement('p');
+        const taskPriority = document.createElement('p'); 
+
+        taskTitle.innerHTML = project.tasks[i].title;
+        taskDueDate.innerHTML = "Due date: " + project.tasks[i].dueDate;
+        taskPriority.innerHTML = "Priority: " + project.tasks[i].priority;
+        removeTaskButton.innerHTML = "Remove";
+        removeTaskButton.style = `
+            background-color: #04AA6D;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        `;
+        removeTaskButton.addEventListener('click', () => {
+            project.tasks.splice(i, 1);
+            projectContainer.removeChild(task);
+        });
+
+        task.appendChild(taskTitle);
+        task.appendChild(taskDueDate);
+        task.appendChild(taskPriority);
+        task.appendChild(removeTaskButton);
+
+        projectContainer.appendChild(task);
+    }
+
+    addNewTaskButton(project, projectContainer);
     projectContainer.setAttribute('class', 'project-container');
     projectsContainer.appendChild(projectContainer);
 }

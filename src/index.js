@@ -14,5 +14,3 @@ proyecto1.addTask(task2);
 
 addProjectToDropdown(proyecto1);
 displayProject(proyecto1);
-
-console.log("hola")
