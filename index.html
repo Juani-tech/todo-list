@@ -10,7 +10,18 @@
         <h1>My todo's web</h1>
         <nav>
             <ul>
-                <li><button id="add-project-button">Add project</button></li>
+                <li>
+                    <button id="add-project-button">Add project</button>
+                    <dialog id="add-project-dialog">
+                        <form id="add-project-form">
+                            <label for="project-title">Project title</label>
+                            <input type="text" name="project-title" id="project-title" placeholder="Project name" required oninvalid="this.setCustomValidity('Please insert a proyect name')" oninput="this.setCustomValidity('')">
+                            <button type="submit" id="add-new-project-button">Add</button>
+                            <button id="close-new-project-button">Close</button>
+                        </form>
+                    </dialog>
+                    
+                </li>
                 <li>
                     <div class="dropdown">
                         <button class="dropbtn">Projects</button>
