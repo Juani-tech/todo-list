@@ -12,44 +12,48 @@ export function addProjectToDropdown(project) {
     projectList.appendChild(newProject);
 }
 
-export function addNewProject() {
-    const content = document.getElementById('content');
-    const dialog = document.createElement('dialog');
-    const form = document.createElement('form');
-    const titleLabel = document.createElement('label');
-    const title = document.createElement('input');
-    const submit = document.createElement('button');
-    const close = document.createElement('button');
+// export function addNewProject() {
+//     const content = document.getElementById('content');
     
-    form.setAttribute('class', 'add-project-form');
-
-    titleLabel.style = `
-        font-weight: bold;
-        font-size: 1rem;
-    `
-
-    content.appendChild(dialog);
-    dialog.appendChild(form);
-    form.appendChild(titleLabel);
-    form.appendChild(title);
-    form.appendChild(submit);
-    form.appendChild(close);
-    content.appendChild(dialog);
-    dialog.showModal();
-
-    titleLabel.innerHTML = "Project Title: ";
-    submit.innerHTML = "Submit";
-    close.innerHTML = "Close";
+//     const dialog = document.createElement('dialog');
+//     const form = document.createElement('form');
+//     const titleLabel = document.createElement('label');
+//     const title = document.createElement('input');
+//     const submit = document.createElement('button');
+//     const close = document.createElement('button');
     
-    submit.addEventListener('click', () => {
-        const newProject = new Project(title.value);
-        addProjectToDropdown(newProject);
-        dialog.close();
-    }); 
-    close.addEventListener('click', () => {
-        dialog.close();
-    });
-}
+//     form.setAttribute('class', 'add-project-form');
+//     form.setAttribute('method', 'dialog');
+//     title.setAttribute('required', '');
+//     submit.setAttribute('type', 'submit');
+//     titleLabel.style = `
+//         font-weight: bold;
+//         font-size: 1rem;
+//     `
+
+//     dialog.appendChild(form);
+//     form.appendChild(titleLabel);
+//     form.appendChild(title);
+//     form.appendChild(submit);
+//     form.appendChild(close);
+//     content.appendChild(dialog);
+//     dialog.showModal(); 
+
+//     titleLabel.innerHTML = "Project Title: ";
+//     submit.innerHTML = "Submit";
+//     close.innerHTML = "Close";
+    
+//     submit.addEventListener('click', (event) => {
+//         event.preventDefault();
+//         const newProject = new Project(title.value);
+//         addProjectToDropdown(newProject);
+//         dialog.close();
+
+//     }); 
+//     close.addEventListener('click', () => {
+//         dialog.close();
+//     });
+// }
 
 function addNewTaskButton(project, projectContainer) {
     const newTaskButton = document.createElement('button');
