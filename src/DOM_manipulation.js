@@ -12,48 +12,6 @@ export function addProjectToDropdown(project) {
     projectList.appendChild(newProject);
 }
 
-// export function addNewProject() {
-//     const content = document.getElementById('content');
-    
-//     const dialog = document.createElement('dialog');
-//     const form = document.createElement('form');
-//     const titleLabel = document.createElement('label');
-//     const title = document.createElement('input');
-//     const submit = document.createElement('button');
-//     const close = document.createElement('button');
-    
-//     form.setAttribute('class', 'add-project-form');
-//     form.setAttribute('method', 'dialog');
-//     title.setAttribute('required', '');
-//     submit.setAttribute('type', 'submit');
-//     titleLabel.style = `
-//         font-weight: bold;
-//         font-size: 1rem;
-//     `
-
-//     dialog.appendChild(form);
-//     form.appendChild(titleLabel);
-//     form.appendChild(title);
-//     form.appendChild(submit);
-//     form.appendChild(close);
-//     content.appendChild(dialog);
-//     dialog.showModal(); 
-
-//     titleLabel.innerHTML = "Project Title: ";
-//     submit.innerHTML = "Submit";
-//     close.innerHTML = "Close";
-    
-//     submit.addEventListener('click', (event) => {
-//         event.preventDefault();
-//         const newProject = new Project(title.value);
-//         addProjectToDropdown(newProject);
-//         dialog.close();
-
-//     }); 
-//     close.addEventListener('click', () => {
-//         dialog.close();
-//     });
-// }
 
 function addNewTaskButton(project, projectContainer) {
     const newTaskButton = document.createElement('button');
@@ -65,6 +23,9 @@ function addNewTaskButton(project, projectContainer) {
 
         const newTask = document.createElement('div');
         newTask.setAttribute('class', 'task-container')
+
+        const newTaskForm = document.createElement('form');
+        newTaskForm.setAttribute('class', 'new-task-form');
 
         const newTaskTitleLabel = document.createElement('label');
         const newTaskTitle = document.createElement('input');
@@ -83,12 +44,16 @@ function addNewTaskButton(project, projectContainer) {
         const cancelButton = document.createElement('button');
 
         newTaskTitleLabel.innerHTML = "Title: ";  
+        newTaskTitle.setAttribute('required', '');
         newTaskDueDateLabel.innerHTML = "Due Date: ";
+        newTaskDueDate.setAttribute('required', '');
         newTaskPriorityLabel.innerHTML = "Priority: ";
+        newTaskPriority.setAttribute('required', '');
         newTaskDescriptionLabel.innerHTML = "Description: ";
         newTaskNotesLabel.innerHTML = "Notes: ";
         newTaskChecklistLabel.innerHTML = "Checklist: ";
         addTaskButton.innerHTML = "Add Task";
+        addTaskButton.setAttribute('type', 'submit');
         cancelButton.innerHTML = "Cancel";
 
         buttonsContainer.setAttribute('class', 'add-task-buttons-container');
@@ -96,7 +61,8 @@ function addNewTaskButton(project, projectContainer) {
         addTaskButton.setAttribute('class', 'add-task-button');
 
   
-        addTaskButton.addEventListener('click', () => {
+        newTaskForm.addEventListener('submit', (event) => {
+            event.preventDefault();
             const newProjectTask = new Todo(
                 newTaskTitle.value,
                 newTaskDescription.value,
@@ -106,8 +72,8 @@ function addNewTaskButton(project, projectContainer) {
                 newTaskChecklist.value.split(',')
             );
             project.addTask(newProjectTask);
-            displayProject(project);
             projectContainer.removeChild(newTask);
+            displayProject(project);
         });
         cancelButton.addEventListener('click', () => {
             projectContainer.removeChild(newTask);
@@ -117,19 +83,33 @@ function addNewTaskButton(project, projectContainer) {
 
         buttonsContainer.appendChild(addTaskButton);
         buttonsContainer.appendChild(cancelButton);
-        newTask.appendChild(newTaskTitleLabel);
-        newTask.appendChild(newTaskTitle);
-        newTask.appendChild(newTaskDueDateLabel);
-        newTask.appendChild(newTaskDueDate);
-        newTask.appendChild(newTaskPriorityLabel);
-        newTask.appendChild(newTaskPriority);
-        newTask.appendChild(newTaskDescriptionLabel);
-        newTask.appendChild(newTaskDescription);
-        newTask.appendChild(newTaskNotesLabel);
-        newTask.appendChild(newTaskNotes);
-        newTask.appendChild(newTaskChecklistLabel);
-        newTask.appendChild(newTaskChecklist);
-        newTask.appendChild(buttonsContainer);
+        newTaskForm.appendChild(newTaskTitleLabel);
+        newTaskForm.appendChild(newTaskTitle);
+        newTaskForm.appendChild(newTaskDueDateLabel);
+        newTaskForm.appendChild(newTaskDueDate);
+        newTaskForm.appendChild(newTaskPriorityLabel);
+        newTaskForm.appendChild(newTaskPriority);
+        newTaskForm.appendChild(newTaskDescriptionLabel);
+        newTaskForm.appendChild(newTaskDescription);
+        newTaskForm.appendChild(newTaskNotesLabel);
+        newTaskForm.appendChild(newTaskNotes);
+        newTaskForm.appendChild(newTaskChecklistLabel);
+        newTaskForm.appendChild(newTaskChecklist);
+        newTaskForm.appendChild(buttonsContainer);
+        newTask.appendChild(newTaskForm);
+        // newTask.appendChild(newTaskTitleLabel);
+        // newTask.appendChild(newTaskTitle);
+        // newTask.appendChild(newTaskDueDateLabel);
+        // newTask.appendChild(newTaskDueDate);
+        // newTask.appendChild(newTaskPriorityLabel);
+        // newTask.appendChild(newTaskPriority);
+        // newTask.appendChild(newTaskDescriptionLabel);
+        // newTask.appendChild(newTaskDescription);
+        // newTask.appendChild(newTaskNotesLabel);
+        // newTask.appendChild(newTaskNotes);
+        // newTask.appendChild(newTaskChecklistLabel);
+        // newTask.appendChild(newTaskChecklist);
+        // newTask.appendChild(buttonsContainer);
         projectContainer.appendChild(newTask);
     });
     projectContainer.appendChild(newTaskButton);

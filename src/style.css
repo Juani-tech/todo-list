@@ -93,7 +93,7 @@ header > nav > ul {
 
 }
 
-.task-container {
+.task-container, .new-task-form {
 	border: 1px solid black;
 	border-radius: 5px;
 	display: grid;
