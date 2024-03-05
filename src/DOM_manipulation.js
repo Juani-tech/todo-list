@@ -1,5 +1,5 @@
 import { Todo } from './projects.js';
-import { removeTaskFromLocalStorage, storeTaskInProject } from './information_retrieving.js';
+import { editTaskInLocalStorage, removeTaskFromLocalStorage, storeTaskInProject } from './information_retrieving.js';
 
 
 
@@ -193,7 +193,6 @@ export function displayProject(project) {
                 task.appendChild(removeTaskButton);
             });
         });
-
         editTaskButton.addEventListener('click', () => {
             task.innerHTML = "";
             const newTaskTitleLabel = document.createElement('label');
@@ -240,7 +239,9 @@ export function displayProject(project) {
                     newTaskNotes.value,
                     newTaskChecklist.value.split(',')
                 );
+                editTaskInLocalStorage(project, i, newProjectTask);
                 project.addTask(newProjectTask);
+
                 displayProject(project);
             });
             cancelButton.addEventListener('click', () => {

@@ -16,5 +16,9 @@ export function storeTaskInProject(project, task){
     localStorage.setItem(project.title, JSON.stringify(data));
 }
 
-
+export function editTaskInLocalStorage(project, index, task){
+    const data = JSON.parse(localStorage.getItem(project.title));
+    data.tasks[index] = task;
+    localStorage.setItem(project.title, JSON.stringify(data));
+}
 
