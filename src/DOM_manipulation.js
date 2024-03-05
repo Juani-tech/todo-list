@@ -16,7 +16,73 @@ export function addProjectToDropdown(project) {
 }
 
 
-function addNewTaskButton(project, projectContainer) {
+function createNewTaskForm(values) {
+    const newTaskForm = document.createElement('form');
+    newTaskForm.setAttribute('class', 'new-task-form');
+
+    const newTaskTitleLabel = document.createElement('label');
+    const newTaskTitle = document.createElement('input');
+    const newTaskDueDateLabel = document.createElement('label');
+    const newTaskDueDate = document.createElement('input');
+    const newTaskPriorityLabel = document.createElement('label');
+    const newTaskPriority = document.createElement('input');
+    const newTaskDescriptionLabel = document.createElement('label');
+    const newTaskDescription = document.createElement('input');
+    const newTaskNotesLabel = document.createElement('label');
+    const newTaskNotes = document.createElement('input');
+    const newTaskChecklistLabel = document.createElement('label');
+    const newTaskChecklist = document.createElement('input');
+    const buttonsContainer = document.createElement('div');
+    const addTaskButton = document.createElement('button');
+    const cancelButton = document.createElement('button');
+
+    newTaskTitleLabel.innerHTML = "Title: ";
+    newTaskTitle.setAttribute('required', '');
+    newTaskDueDateLabel.innerHTML = "Due Date (YYYY-MM-DD): ";
+    newTaskDueDate.setAttribute('required', '');
+    newTaskDueDate.setAttribute('type', 'date');
+    newTaskDueDate.setAttribute('pattern', '\d{4}-\d{2}-\d{2}');
+    newTaskPriorityLabel.innerHTML = "Priority: ";
+    newTaskPriority.setAttribute('required', '');
+    newTaskDescriptionLabel.innerHTML = "Description: ";
+    newTaskNotesLabel.innerHTML = "Notes: ";
+    newTaskChecklistLabel.innerHTML = "Checklist: ";
+    addTaskButton.innerHTML = "Add Task";
+    addTaskButton.setAttribute('type', 'submit');
+    cancelButton.innerHTML = "Cancel";
+
+    newTaskTitle.value = values.title;
+    newTaskDueDate.value = values.dueDate;
+    newTaskPriority.value = values.priority;
+    newTaskDescription.value = values.description;
+    newTaskNotes.value = values.notes;
+    newTaskChecklist.value = values.checklist;
+
+    buttonsContainer.setAttribute('class', 'add-task-buttons-container');
+    cancelButton.setAttribute('class', 'cancel-button');
+    addTaskButton.setAttribute('class', 'add-task-button');
+
+    buttonsContainer.appendChild(addTaskButton);
+    buttonsContainer.appendChild(cancelButton);
+    newTaskForm.appendChild(newTaskTitleLabel);
+    newTaskForm.appendChild(newTaskTitle);
+    newTaskForm.appendChild(newTaskDueDateLabel);
+    newTaskForm.appendChild(newTaskDueDate);
+    newTaskForm.appendChild(newTaskPriorityLabel);
+    newTaskForm.appendChild(newTaskPriority);
+    newTaskForm.appendChild(newTaskDescriptionLabel);
+    newTaskForm.appendChild(newTaskDescription);
+    newTaskForm.appendChild(newTaskNotesLabel);
+    newTaskForm.appendChild(newTaskNotes);
+    newTaskForm.appendChild(newTaskChecklistLabel);
+    newTaskForm.appendChild(newTaskChecklist);
+    newTaskForm.appendChild(buttonsContainer);
+
+
+    return [newTaskForm, newTaskTitle, newTaskDueDate, newTaskPriority, newTaskDescription, newTaskNotes, newTaskChecklist, addTaskButton, cancelButton];
+}
+
+function addNewTaskButton(project, projectContainer, values) {
     const newTaskButton = document.createElement('button');
     newTaskButton.setAttribute('class', 'new-task-button');
     newTaskButton.innerHTML = "New Task";
@@ -27,45 +93,8 @@ function addNewTaskButton(project, projectContainer) {
         const newTask = document.createElement('div');
         newTask.setAttribute('class', 'task-container')
 
-        const newTaskForm = document.createElement('form');
-        newTaskForm.setAttribute('class', 'new-task-form');
-
-        const newTaskTitleLabel = document.createElement('label');
-        const newTaskTitle = document.createElement('input');
-        const newTaskDueDateLabel = document.createElement('label');
-        const newTaskDueDate = document.createElement('input');
-        const newTaskPriorityLabel = document.createElement('label');
-        const newTaskPriority = document.createElement('input');
-        const newTaskDescriptionLabel = document.createElement('label');
-        const newTaskDescription = document.createElement('input'); 
-        const newTaskNotesLabel = document.createElement('label');
-        const newTaskNotes = document.createElement('input');
-        const newTaskChecklistLabel = document.createElement('label');
-        const newTaskChecklist = document.createElement('input');
-        const buttonsContainer = document.createElement('div');
-        const addTaskButton = document.createElement('button');
-        const cancelButton = document.createElement('button');
-
-        newTaskTitleLabel.innerHTML = "Title: ";  
-        newTaskTitle.setAttribute('required', '');
-        newTaskDueDateLabel.innerHTML = "Due Date (YYYY-MM-DD): ";
-        newTaskDueDate.setAttribute('required', '');
-        newTaskDueDate.setAttribute('type', 'date');
-        newTaskDueDate.setAttribute('pattern', '\d{4}-\d{2}-\d{2}');
-        newTaskPriorityLabel.innerHTML = "Priority: ";
-        newTaskPriority.setAttribute('required', '');
-        newTaskDescriptionLabel.innerHTML = "Description: ";
-        newTaskNotesLabel.innerHTML = "Notes: ";
-        newTaskChecklistLabel.innerHTML = "Checklist: ";
-        addTaskButton.innerHTML = "Add Task";
-        addTaskButton.setAttribute('type', 'submit');
-        cancelButton.innerHTML = "Cancel";
-
-        buttonsContainer.setAttribute('class', 'add-task-buttons-container');
-        cancelButton.setAttribute('class', 'cancel-button');
-        addTaskButton.setAttribute('class', 'add-task-button');
-
-  
+        const [newTaskForm, newTaskTitle, newTaskDueDate, newTaskPriority, newTaskDescription, newTaskNotes, newTaskChecklist, addTaskButton, cancelButton] = createNewTaskForm(values);
+        
         newTaskForm.addEventListener('submit', (event) => {
             event.preventDefault();
             const newProjectTask = new Todo(
@@ -89,22 +118,6 @@ function addNewTaskButton(project, projectContainer) {
             projectContainer.appendChild(newTaskButton);
         });
 
-
-        buttonsContainer.appendChild(addTaskButton);
-        buttonsContainer.appendChild(cancelButton);
-        newTaskForm.appendChild(newTaskTitleLabel);
-        newTaskForm.appendChild(newTaskTitle);
-        newTaskForm.appendChild(newTaskDueDateLabel);
-        newTaskForm.appendChild(newTaskDueDate);
-        newTaskForm.appendChild(newTaskPriorityLabel);
-        newTaskForm.appendChild(newTaskPriority);
-        newTaskForm.appendChild(newTaskDescriptionLabel);
-        newTaskForm.appendChild(newTaskDescription);
-        newTaskForm.appendChild(newTaskNotesLabel);
-        newTaskForm.appendChild(newTaskNotes);
-        newTaskForm.appendChild(newTaskChecklistLabel);
-        newTaskForm.appendChild(newTaskChecklist);
-        newTaskForm.appendChild(buttonsContainer);
         newTask.appendChild(newTaskForm);
         projectContainer.appendChild(newTask);
     });
@@ -195,41 +208,10 @@ export function displayProject(project) {
         });
         editTaskButton.addEventListener('click', () => {
             task.innerHTML = "";
-            const newTaskTitleLabel = document.createElement('label');
-            const newTaskTitle = document.createElement('input');
-            const newTaskDueDateLabel = document.createElement('label');
-            const newTaskDueDate = document.createElement('input');
-            const newTaskPriorityLabel = document.createElement('label');
-            const newTaskPriority = document.createElement('input');
-            const newTaskDescriptionLabel = document.createElement('label');
-            const newTaskDescription = document.createElement('input');
-            const newTaskNotesLabel = document.createElement('label');
-            const newTaskNotes = document.createElement('input');
-            const newTaskChecklistLabel = document.createElement('label');
-            const newTaskChecklist = document.createElement('input');
-            const saveButton = document.createElement('button');
-            const cancelButton = document.createElement('button');
-
-            newTaskTitle.value = project.tasks[i].title;
-            newTaskDueDate.value = project.tasks[i].dueDate;
-            newTaskPriority.value = project.tasks[i].priority;
-            newTaskDescription.value = project.tasks[i].description;
-            newTaskNotes.value = project.tasks[i].notes;
-            newTaskChecklist.value = project.tasks[i].checklist;
-
-            newTaskTitleLabel.innerHTML = "Title: ";
-            newTaskDueDateLabel.innerHTML = "Due Date: ";
-            newTaskPriorityLabel.innerHTML = "Priority: ";
-            newTaskDescriptionLabel.innerHTML = "Description: ";
-            newTaskNotesLabel.innerHTML = "Notes: ";
-            newTaskChecklistLabel.innerHTML = "Checklist: ";
-            saveButton.innerHTML = "Save";
-            cancelButton.innerHTML = "Cancel";
-
-            saveButton.setAttribute('class', 'save-button');
-            cancelButton.setAttribute('class', 'cancel-button');
-
-            saveButton.addEventListener('click', () => {
+            const [newTaskForm, newTaskTitle, newTaskDueDate, newTaskPriority, newTaskDescription, newTaskNotes, newTaskChecklist, addTaskButton, cancelButton] = createNewTaskForm(project.tasks[i]);
+            
+            newTaskForm.addEventListener('submit', (event) => {
+                event.preventDefault();
                 project.removeTask(taskTitle.innerHTML);
                 const newProjectTask = new Todo(
                     newTaskTitle.value,
@@ -241,30 +223,16 @@ export function displayProject(project) {
                 );
                 editTaskInLocalStorage(project, i, newProjectTask);
                 project.addTask(newProjectTask);
-
                 displayProject(project);
             });
             cancelButton.addEventListener('click', () => {
                 displayProject(project);
             });
+            
+            task.appendChild(newTaskForm);
 
-            task.appendChild(newTaskTitleLabel);
-            task.appendChild(newTaskTitle);
-            task.appendChild(newTaskDueDateLabel);
-            task.appendChild(newTaskDueDate);
-            task.appendChild(newTaskPriorityLabel);
-            task.appendChild(newTaskPriority);
-            task.appendChild(newTaskDescriptionLabel);
-            task.appendChild(newTaskDescription);
-            task.appendChild(newTaskNotesLabel);
-            task.appendChild(newTaskNotes);
-            task.appendChild(newTaskChecklistLabel);
-            task.appendChild(newTaskChecklist);
-            task.appendChild(saveButton);
-            task.appendChild(cancelButton);
         }
         );
-
         task.appendChild(taskTitle);
         task.appendChild(taskDueDate);
         task.appendChild(taskPriority);
@@ -274,7 +242,7 @@ export function displayProject(project) {
         projectContainer.appendChild(task);
     }
 
-    addNewTaskButton(project, projectContainer);
+    addNewTaskButton(project, projectContainer, { title: '', description: '', dueDate: '', priority: '', notes: '', checklist: '' });
     projectContainer.setAttribute('class', 'project-container');
     projectsContainer.appendChild(projectContainer);
 }
