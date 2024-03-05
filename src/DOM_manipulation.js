@@ -1,4 +1,4 @@
-import { Project, Todo, ProjectsContainer } from './projects.js';
+import { Todo } from './projects.js';
 
 
 
@@ -109,19 +109,6 @@ function addNewTaskButton(project, projectContainer) {
         newTaskForm.appendChild(newTaskChecklist);
         newTaskForm.appendChild(buttonsContainer);
         newTask.appendChild(newTaskForm);
-        // newTask.appendChild(newTaskTitleLabel);
-        // newTask.appendChild(newTaskTitle);
-        // newTask.appendChild(newTaskDueDateLabel);
-        // newTask.appendChild(newTaskDueDate);
-        // newTask.appendChild(newTaskPriorityLabel);
-        // newTask.appendChild(newTaskPriority);
-        // newTask.appendChild(newTaskDescriptionLabel);
-        // newTask.appendChild(newTaskDescription);
-        // newTask.appendChild(newTaskNotesLabel);
-        // newTask.appendChild(newTaskNotes);
-        // newTask.appendChild(newTaskChecklistLabel);
-        // newTask.appendChild(newTaskChecklist);
-        // newTask.appendChild(buttonsContainer);
         projectContainer.appendChild(newTask);
     });
     projectContainer.appendChild(newTaskButton);
@@ -170,6 +157,11 @@ export function displayProject(project) {
 
         removeTaskButton.addEventListener('click', () => {
             project.removeTask(taskTitle.innerHTML);
+            const data = JSON.parse(localStorage.getItem(project.title));
+            const tasks = data.tasks;
+            // console.log(tasks);
+            tasks.splice(i, 1);
+            localStorage.setItem(project.title, JSON.stringify(data));
             projectContainer.removeChild(task);
         });
         seeTaskButton.addEventListener('click', () => {

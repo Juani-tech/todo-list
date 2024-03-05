@@ -1,13 +1,11 @@
 import './style.css';
-import { addProjectToDropdown, displayProject } from './DOM_manipulation.js';
-import {createNewProject, Todo, Project,} from './projects.js';
+import { addProjectToDropdown } from './DOM_manipulation.js';
+import { Project } from './projects.js';
 
 
 
-const projectsContainer = require('./projects.js').default;
 
 const addProjectButton = document.getElementById('add-project-button');
-// const submit = document.getElementById('add-new-project-button');
 const form = document.getElementById('add-project-form');
 const close = document.getElementById('close-new-project-button'); 
 const dialog = document.getElementById('add-project-dialog');
@@ -18,9 +16,11 @@ addProjectButton.addEventListener('click', () => {
 
 form.addEventListener('submit', (event) => {
     event.preventDefault();
+    if (title.value === '') {
+        return;
+    }
     const newProject = new Project(title.value);
     localStorage.setItem(title.value, JSON.stringify(newProject));
-    projectsContainer.addProject(newProject);
     addProjectToDropdown(newProject);
     dialog.close();
     form.reset();
@@ -35,7 +35,5 @@ data.forEach((key) => {
     const project = JSON.parse(localStorage.getItem(key));
     const newProject = new Project(project.title);
     newProject.tasks = project.tasks;
-    projectsContainer.addProject(newProject);
     addProjectToDropdown(newProject);
 });
-
