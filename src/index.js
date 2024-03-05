@@ -4,7 +4,7 @@ import {createNewProject, Todo, Project,} from './projects.js';
 
 
 
-
+const projectsContainer = require('./projects.js').default;
 
 const addProjectButton = document.getElementById('add-project-button');
 // const submit = document.getElementById('add-new-project-button');
@@ -19,6 +19,8 @@ addProjectButton.addEventListener('click', () => {
 form.addEventListener('submit', (event) => {
     event.preventDefault();
     const newProject = new Project(title.value);
+    localStorage.setItem(title.value, JSON.stringify(newProject));
+    projectsContainer.addProject(newProject);
     addProjectToDropdown(newProject);
     dialog.close();
     form.reset();
@@ -28,14 +30,12 @@ close.addEventListener('click', () => {
 });
 
 
+const data = Object.keys(localStorage);
+data.forEach((key) => {
+    const project = JSON.parse(localStorage.getItem(key));
+    const newProject = new Project(project.title);
+    newProject.tasks = project.tasks;
+    projectsContainer.addProject(newProject);
+    addProjectToDropdown(newProject);
+});
 
-// addProjectButton.addEventListener('click', addNewProject);
-
-const proyecto1 = createNewProject("Proyecto 1");
-const task1 = new Todo("Tarea 1", "Descripcion 1", "2021-08-01", "alta", "Notas 1", ["item1", "item2"]);
-const task2 = new Todo("Tarea 2", "Descripcion 2", "2021-08-02", "baja", "Notas 2", ["item1", "item2"]);
-proyecto1.addTask(task1);
-proyecto1.addTask(task2);
-
-addProjectToDropdown(proyecto1);
-displayProject(proyecto1);

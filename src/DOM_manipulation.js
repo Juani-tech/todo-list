@@ -1,4 +1,7 @@
-import { Project, Todo } from './projects.js';
+import { Project, Todo, ProjectsContainer } from './projects.js';
+
+
+
 
 export function addProjectToDropdown(project) {
     const projectList = document.querySelector('.dropdown-content');
@@ -45,8 +48,10 @@ function addNewTaskButton(project, projectContainer) {
 
         newTaskTitleLabel.innerHTML = "Title: ";  
         newTaskTitle.setAttribute('required', '');
-        newTaskDueDateLabel.innerHTML = "Due Date: ";
+        newTaskDueDateLabel.innerHTML = "Due Date (YYYY-MM-DD): ";
         newTaskDueDate.setAttribute('required', '');
+        newTaskDueDate.setAttribute('type', 'date');
+        newTaskDueDate.setAttribute('pattern', '\d{4}-\d{2}-\d{2}');
         newTaskPriorityLabel.innerHTML = "Priority: ";
         newTaskPriority.setAttribute('required', '');
         newTaskDescriptionLabel.innerHTML = "Description: ";
@@ -71,6 +76,13 @@ function addNewTaskButton(project, projectContainer) {
                 newTaskNotes.value,
                 newTaskChecklist.value.split(',')
             );
+
+            // Save the new task to the local storage
+            const jsonDataString = localStorage.getItem(project.title);
+            const jsonData = JSON.parse(jsonDataString);
+            jsonData.tasks.push(newProjectTask);
+            localStorage.setItem(project.title, JSON.stringify(jsonData));
+            
             project.addTask(newProjectTask);
             projectContainer.removeChild(newTask);
             displayProject(project);

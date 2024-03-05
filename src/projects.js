@@ -1,3 +1,44 @@
+export class ProjectsContainer { 
+    constructor() {
+        if (!ProjectsContainer.instance) {
+            this.projects = [];
+            ProjectsContainer.instance = this;
+        }
+        return ProjectsContainer.instance;
+    }
+
+    #checkIfExists(projectTitle) {
+        this.projects.forEach((p) => {
+            if (p.title === projectTitle) {
+                return true;
+            }
+        });
+        return false;
+    }
+
+    addProject(project) {
+        if (this.#checkIfExists(project.title)) {
+            return;
+        }
+        this.projects.push(project);
+    }
+
+    removeProject(projectTitle) {
+        this.projects = this.projects.filter((p) => p.title !== projectTitle);
+    }
+
+    getProject(projectTitle) {
+        return this.projects.find((p) => p.title === projectTitle);
+    }
+
+}
+
+
+const projectsContainer = new ProjectsContainer();
+Object.freeze(projectsContainer);
+export default projectsContainer;
+
+
 export class Project {
     constructor(title) {
         this.title = title;
