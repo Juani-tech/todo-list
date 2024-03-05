@@ -1,5 +1,5 @@
 import { Todo } from './projects.js';
-
+import { removeTaskFromLocalStorage, storeTaskInProject } from './information_retrieving.js';
 
 
 
@@ -78,11 +78,8 @@ function addNewTaskButton(project, projectContainer) {
             );
 
             // Save the new task to the local storage
-            const jsonDataString = localStorage.getItem(project.title);
-            const jsonData = JSON.parse(jsonDataString);
-            jsonData.tasks.push(newProjectTask);
-            localStorage.setItem(project.title, JSON.stringify(jsonData));
-            
+
+            storeTaskInProject(project, newProjectTask);
             project.addTask(newProjectTask);
             projectContainer.removeChild(newTask);
             displayProject(project);
@@ -157,11 +154,7 @@ export function displayProject(project) {
 
         removeTaskButton.addEventListener('click', () => {
             project.removeTask(taskTitle.innerHTML);
-            const data = JSON.parse(localStorage.getItem(project.title));
-            const tasks = data.tasks;
-            // console.log(tasks);
-            tasks.splice(i, 1);
-            localStorage.setItem(project.title, JSON.stringify(data));
+            removeTaskFromLocalStorage(project, i);
             projectContainer.removeChild(task);
         });
         seeTaskButton.addEventListener('click', () => {
